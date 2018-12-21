@@ -23,26 +23,35 @@
                 <div class="field">
                   <div class="control">
                     <input
+                      v-model="dolares"
                       class="input is-primary is-medium is-rounded"
                       type="number"
-                      placeholder="100 U$D">
+                      placeholder="100 U$D"
+                      min="0">
                   </div>
                 </div>
               </div>
 
               <div class="column">
                 <div class="select is-medium is-rounded">
-                    <select name="divisas">
-                      <option value="">Seleccione una divisa...</option>
+                    <select name="divisas" v-model.number="seleccionada">
+                      <option value="">Seleccione una divisa</option>
+                      <option v-for="divisa in divisas" :key="divisa.codigo" :value="divisa">
+                        {{ divisa.codigo }}
+                      </option>
                     </select>
                 </div>
               </div>
 
             </div>
 
-            <div class="box has-text-centered">
-              <p class="is-size-4 has-text-primary">Resultado</p>
-              <p class="is-size-5 has-text-grey-light">Descripción</p>
+            <div class="box has-text-centered" v-if="existenAmbos">
+              <p class="is-size-4 has-text-primary">
+                {{ dolares }} dolares equivale a {{ resultado }} {{ seleccionada.codigo }}
+              </p>
+              <p class="is-size-5 has-text-grey-light">
+                1 dolar = {{ seleccionada.ratio }} {{ seleccionada.codigo }}
+              </p>
             </div>
             
           </div>
@@ -63,8 +72,22 @@ export default {
 
   data() {
     return {
-      divisas: []
+      divisas: [],
+      dolares: 0,
+      seleccionada: ""
     };
+  },
+
+  computed: {
+    existenAmbos() {
+      return this.dolares && this.seleccionada;
+    },
+
+    resultado() {
+      return this.existenAmbos
+        ? (this.dolares * this.seleccionada.ratio).toFixed(2)
+        : 0;
+    }
   },
 
   methods: {
