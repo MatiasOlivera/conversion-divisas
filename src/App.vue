@@ -75,7 +75,14 @@ export default {
           const arregloDivisas = Object.entries(objeto.rates).map(
             ([codigo, ratio]) => ({ codigo, ratio })
           );
-          this.divisas = arregloDivisas;
+
+          const arregloOrdenado = arregloDivisas.sort((a, b) => {
+            if (a.codigo > b.codigo) return 1;
+            if (a.codigo < b.codigo) return -1;
+            return 0;
+          });
+
+          this.divisas = arregloOrdenado;
         });
     }
   }
