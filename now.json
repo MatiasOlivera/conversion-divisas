@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "name": "conversion-divisas",
+  "type": "static",
+  "static": {
+    "public": "dist",
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "alias": "conversion-divisas",
+  "files": ["dist"]
+}
