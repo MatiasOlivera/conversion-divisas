@@ -55,7 +55,30 @@
 
 <script>
 export default {
-  name: "app"
+  name: "app",
+
+  created() {
+    this.getDivisas();
+  },
+
+  data() {
+    return {
+      divisas: []
+    };
+  },
+
+  methods: {
+    getDivisas() {
+      fetch("https://api.exchangeratesapi.io/latest?base=USD")
+        .then(respuesta => respuesta.json())
+        .then(objeto => {
+          const arregloDivisas = Object.entries(objeto.rates).map(
+            ([codigo, ratio]) => ({ codigo, ratio })
+          );
+          this.divisas = arregloDivisas;
+        });
+    }
+  }
 };
 </script>
 
